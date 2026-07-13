@@ -1,0 +1,15 @@
+.env
+.venv/
+.deps/
+.tmp/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.pyright/
+*.py[cod]
+node_modules/
+dist/
+coverage/
+.angular/
+.idea/
+.vscode/

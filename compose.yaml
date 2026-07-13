@@ -1,0 +1,59 @@
+name: nexasupply
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-nexasupply}
+      POSTGRES_USER: ${POSTGRES_USER:-nexasupply}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-for-local-development}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      API_ENVIRONMENT: ${API_ENVIRONMENT:-development}
+      API_DATABASE_URL: ${API_DATABASE_URL:-postgresql+psycopg://nexasupply:change-me-for-local-development@db:5432/nexasupply}
+      API_CORS_ORIGINS: '${API_CORS_ORIGINS:-["http://localhost:4200"]}'
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - ./apps/api:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      WEB_API_URL: ${WEB_API_URL:-http://localhost:8000}
+    ports:
+      - "${WEB_PORT:-4200}:4200"
+    volumes:
+      - ./apps/web:/app
+      - web_node_modules:/app/node_modules
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  web_node_modules:

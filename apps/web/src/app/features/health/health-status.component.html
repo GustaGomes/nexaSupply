@@ -1,0 +1,19 @@
+<section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="health-title">
+  <h2 id="health-title" class="text-xl font-semibold text-slate-900">Estado da plataforma</h2>
+  <p class="mt-2 text-slate-600">Verifique a comunicação entre o frontend e a API.</p>
+
+  <form class="mt-6 flex flex-col gap-4" [formGroup]="environmentForm" (ngSubmit)="check()">
+    <label for="environment-label" class="font-medium text-slate-800">Ambiente</label>
+    <input id="environment-label" pInputText formControlName="label" autocomplete="off" />
+    <p-button type="submit" label="Verificar API" [loading]="checking()" [disabled]="checking()" />
+  </form>
+
+  <div class="mt-4" aria-live="polite">
+    @if (state() === 'available') {
+      <p-message severity="success">API disponível.</p-message>
+    } @else if (state() === 'unavailable') {
+      <p-message severity="error">Não foi possível acessar a API.</p-message>
+    }
+  </div>
+</section>
+
