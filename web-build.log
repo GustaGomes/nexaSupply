@@ -1,0 +1,96 @@
+--progress is a global compose flag, better use `docker compose --progress xx build ...
+ Image nexasupply-web Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.00kB done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 186B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-alpine
+#3 DONE 0.6s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 140B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 13.26kB done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2
+#6 resolve docker.io/library/node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2 0.0s done
+#6 DONE 0.1s
+
+#7 [2/5] WORKDIR /app
+#7 CACHED
+
+#8 [3/5] COPY apps/web/package.json ./package.json
+#8 DONE 0.1s
+
+#9 [4/5] RUN npm install
+#9 29.95 npm error code ERESOLVE
+#9 29.95 npm error ERESOLVE could not resolve
+#9 29.95 npm error
+#9 29.95 npm error While resolving: @angular/build@21.2.19
+#9 29.95 npm error Found: vitest@3.2.7
+#9 29.95 npm error node_modules/vitest
+#9 29.95 npm error   dev vitest@"^3.2.0" from the root project
+#9 29.95 npm error
+#9 29.95 npm error Could not resolve dependency:
+#9 29.95 npm error peerOptional vitest@"^4.0.8" from @angular/build@21.2.19
+#9 29.95 npm error node_modules/@angular/build
+#9 29.95 npm error   dev @angular/build@"~21.2.0" from the root project
+#9 29.95 npm error
+#9 29.95 npm error Conflicting peer dependency: vitest@4.1.10
+#9 29.95 npm error node_modules/vitest
+#9 29.95 npm error   peerOptional vitest@"^4.0.8" from @angular/build@21.2.19
+#9 29.95 npm error   node_modules/@angular/build
+#9 29.95 npm error     dev @angular/build@"~21.2.0" from the root project
+#9 29.95 npm error
+#9 29.95 npm error Fix the upstream dependency conflict, or retry
+#9 29.95 npm error this command with --force or --legacy-peer-deps
+#9 29.95 npm error to accept an incorrect (and potentially broken) dependency resolution.
+#9 29.95 npm error
+#9 29.95 npm error
+#9 29.95 npm error For a full report see:
+#9 29.95 npm error /root/.npm/_logs/2026-07-13T01_42_04_736Z-eresolve-report.txt
+#9 29.95 npm notice
+#9 29.95 npm notice New major version of npm available! 10.9.8 -> 12.0.1
+#9 29.95 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.1
+#9 29.95 npm notice To update run: npm install -g npm@12.0.1
+#9 29.95 npm notice
+#9 29.95 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-07-13T01_42_04_736Z-debug-0.log
+#9 ERROR: process "/bin/sh -c npm install" did not complete successfully: exit code: 1
+------
+ > [4/5] RUN npm install:
+29.95 npm error
+29.95 npm error
+29.95 npm error For a full report see:
+29.95 npm error /root/.npm/_logs/2026-07-13T01_42_04_736Z-eresolve-report.txt
+29.95 npm notice
+29.95 npm notice New major version of npm available! 10.9.8 -> 12.0.1
+29.95 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.1
+29.95 npm notice To update run: npm install -g npm@12.0.1
+29.95 npm notice
+29.95 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-07-13T01_42_04_736Z-debug-0.log
+------
+Dockerfile:6
+
+--------------------
+
+   4 |     
+
+   5 |     COPY apps/web/package.json ./package.json
+
+   6 | >>> RUN npm install
+
+   7 |     
+
+   8 |     COPY apps/web/ .
+
+--------------------
+
+failed to solve: process "/bin/sh -c npm install" did not complete successfully: exit code: 1
+
